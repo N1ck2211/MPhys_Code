@@ -1,18 +1,15 @@
 #include <iostream>
-#include <fstream>
 #include <TFile.h>
 #include <TTree.h>
 #include <ROOT/RVec.hxx>
-
+#include <fstream>
 using namespace std;
 
 void readTree(const char* fileName, const char* treeName, const char* branchName) {
+    ofstream outputfile;
+
     // Open the ROOT file
     TFile *file = new TFile(fileName);
-
-    ofstream outputFile;
-    outputFile.open("output.csv");
-
     if (!file || file->IsZombie()) {
         std::cerr << "Error: Cannot open file " << fileName << std::endl;
         return;
@@ -27,41 +24,42 @@ void readTree(const char* fileName, const char* treeName, const char* branchName
     }
 
     // Set the branch address
-    // Assuming the branch contains integers, adjust the type accordingly
-    
-    // If the data is a float type
-    float_t branchValue;
+    // Assuming the branch contains flaots:
+   // float_t branchValue;
+   // For RVEct values:
 
-    // If the data is a RVec float type
-    // ROOT::VecOps::RVec<float> *branchValue;
+    ROOT::VecOps::RVec<float> *branchValue = nullptr;
     tree->SetBranchAddress(branchName, &branchValue);
 
     // Get the number of entries in the tree
-    Long64_t nEntries = tree->GetEntries();
 
+    Long64_t nEntries = tree->GetEntries();
+    outputfile.open("output.csv");
+    
+    float_t out_val;
     // Loop over entries
-    for (Long64_t iEntry = 0; iEntry < 5; ++iEntry) {
+    for (Long64_t iEntry = 0; iEntry < nEntries * 0.1; ++iEntry) {
         // Read the entry
         tree->GetEntry(iEntry);
 
-        // Access the branch value and write to a file
-        std::cout << "Entry " << iEntry << ", " << branchName << " = " << branchValue << std::endl;
+        out_val = branchValue[0];
 
-        outputFile << branchValue << std::endl;
+        // Access the branch value
+        std::cout << "Entry " << iEntry << ", " << branchName << " = " << out_val << std::endl;
+        outputfile << out_val << "\n";
+
     }
-    
-    //Only necessary when using RVec float type:
-    //delete branchValue;
+    outputfile.close();
 
     // Close the file
     file->Close();
-    outputFile.close();
+    delete branchValue;
 }
 
 int main() {
     const char* fileName = "wzp6_ee_Hgg_ecm125.root";
     const char* treeName = "events";
-    const char* branchName = "jj_m";
+    const char* branchName = "jj_q";
 
     readTree(fileName, treeName, branchName);
 
