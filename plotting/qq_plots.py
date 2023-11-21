@@ -139,18 +139,31 @@ hists["jj_theta"] = {
      "ytitle": "Events",
 }
 
-hists["jj_q"] = {
-     "output": "jj_q",
+hists["jj_eta"] = {
+     "output": "jj_eta",
      "logy": False,
      "stack": True,
      "rebin": 2,
-     "xmin": -4.5,
-     "xmax": 4.5,
+     "xmin": 0,
+     "xmax": 4,
      "ymin": 0,
-     "ymax": 30e3,
-     "xtitle": "charge",
+     "ymax": 700,
+     "xtitle": "#eta",
      "ytitle": "Events",
 }
+
+#hists["jj_q"] = {
+#     "output": "jj_q",
+#     "logy": False,
+#     "stack": True,
+#     "rebin": 2,
+#     "xmin": -4.5,
+#     "xmax": 4.5,
+#     "ymin": 0,
+#     "ymax": 30e3,
+#     "xtitle": "charge",
+#     "ytitle": "Events",
+#}
 
 hists["scoresum_Q"] = {
     "output": "scoresum_Q",
