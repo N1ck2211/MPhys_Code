@@ -90,18 +90,6 @@ void TrainMVA(TChain *fChain){
    TMVA::DataLoader *dataloader = new TMVA::DataLoader("dataset");
 
    /*
-   dataloader->AddVariable("nJet", "nJet","",'D');
-   dataloader->AddVariable("nBJet", "nBJet","",'D');
-   dataloader->AddVariable("HT_bjets", "HT_bjets","",'D');
-   dataloader->AddVariable("maxEta_bjets", "maxEta_bjets","",'D');
-   dataloader->AddVariable("maxPT_bjets", "maxPT_bjets","",'D');
-   dataloader->AddVariable("Wleptonic_pT", "Wleptonic_pT","",'D');
-   dataloader->AddVariable("Wleptonic_Eta", "Wleptonic_Eta","",'D');
-   dataloader->AddVariable("Lep_PT", "Lep_PT","",'D');
-   dataloader->AddVariable("MET", "MET","",'D');
-   dataloader->AddVariable("Lepton_Charge", "Lepton_Charge","",'D');
-   */
-
    dataloader->AddVariable("btagjH1", "btagjH1","",'D');
    dataloader->AddVariable("btagjH2", "btagjH2","",'D');
    dataloader->AddVariable("btagjW1", "btagjW1","",'D');
@@ -113,16 +101,9 @@ void TrainMVA(TChain *fChain){
    dataloader->AddVariable("H_pT/mass_VH",   "H_pT/mass_VH","",'D');
    dataloader->AddVariable("Wp_pT/mass_VH",   "Wp_pT/mass_VH","",'D');
    dataloader->AddVariable("cosThetaStar", "cosThetaStar","",'D');
-   ///dataloader->AddVariable("cosAlpha", "cosAlpha","",'D');
-   ///dataloader->AddVariable("cosPhi", "cosPhi","",'D');
-
-   /*m_myTree->Branch("H_pT",           &m_H_pT);
-   m_myTree->Branch("Wp_pT",            &m_Wp_pT);
-   m_myTree->Branch("dRjjH",            &m_dRjjH);
-   m_myTree->Branch("dRjjWp",           &m_dRjjWp);
-   m_myTree->Branch("mass_VH",          &m_mass_VH);
-   m_myTree->Branch("is_Signal",        &m_is_Signal);
-   m_myTree->Branch("EventWeight",	&EventWeight); */
+   dataloader->AddVariable("cosAlpha", "cosAlpha","",'D');
+   dataloader->AddVariable("cosPhi", "cosPhi","",'D');
+   */
 
    std::cout<<"Going to read input tree"<<std::endl;
    TTree *InTree = fChain->CloneTree(0);
