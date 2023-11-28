@@ -117,7 +117,7 @@ void TrainMVA(TChain *fChain){
    ///TCut mySigDef = "is_Signal == 1 &&  nJet > 4 && nBJet > 1";
    ///TCut myBkgDef = "is_Signal == 0 &&  nJet > 4 && nBJet > 1";
 
-   TCut mySigDef = "is_Signal == 1 && H_mass < 250. && Wp_mass < 160";
+   TCut mySigDef = "is_Signal == 1 && H_mass < 250. && Wp_mass < 160";   
    TCut myBkgDef = "is_Signal == 0 && H_mass < 250. && Wp_mass < 160";
 
    dataloader->PrepareTrainingAndTestTree(mySigDef, myBkgDef, "SplitMode=Random:NormMode=NumEvents:!V:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=100000:nTest_Background=100000");
@@ -131,29 +131,25 @@ void TrainMVA(TChain *fChain){
 }
 
 
+// This is the function we are aiming to call!
 void TrainMVAEventBoosted(TChain *fChain){
    TFile *outputFile            = TFile::Open("output/TMVAResults_BOOSTED.root", "RECREATE" );
    TMVA::Factory *factory	= new TMVA::Factory("TMVAClassificationCategory", outputFile, "!V:!Silent:Transformations=I;P;G");
    TMVA::DataLoader *dataloader = new TMVA::DataLoader("dataset");
 
-   /*
-   dataloader->AddVariable("LepEnergyFrac", "LepEnergyFrac","",'D');
-   dataloader->AddVariable("mTop", "mTop","",'D');
-   dataloader->AddVariable("dR_LH", "dR_LH","",'D');
-   dataloader->AddVariable("RWpTM_lvbb", "RWpTM_lvbb","",'D');
-   dataloader->AddVariable("RHpTM_lvbb", "RHpTM_lvbb","",'D');
-   dataloader->AddVariable("dPhi_WH_lvbb", "dPhi_WH_lvbb","",'D');
-   dataloader->AddVariable("dEta_WH_lvbb", "dEta_WH_lvbb","",'D');
-   */
-
-   dataloader->AddVariable("LepEnergyFrac", "LepEnergyFrac","",'D');
-   dataloader->AddVariable("RWpTM_qqbb", "RWpTM_qqbb","",'D');
-   dataloader->AddVariable("RHpTM_qqbb", "RHpTM_qqbb","",'D');
-   dataloader->AddVariable("dPhi_WH_qqbb", "dPhi_WH_qqbb","",'D');
-   dataloader->AddVariable("dEta_WH_qqbb", "dEta_WH_qqbb","",'D');
-   dataloader->AddVariable("dR_LH", "dR_LH","",'D');   
-   dataloader->AddVariable("dR_LWhad", "dR_LWhad","",'D');
-   ///dataloader->AddVariable("m_W", "m_W","",'D');
+    // Adding variables:
+   dataloader -> AddVariable("qtagj1", "qtagj1", "", 'D')
+   dataloader -> AddVariable("qtagj2", "qtagj2", "", 'D')
+   dataloader -> AddVariable("gtagj1", "gtagj1", "", 'D')
+   dataloader -> AddVariable("gtagj2", "gtagj2", "", 'D')
+   dataloader -> AddVariable("jjmass", "jjmass", "", 'D')
+   dataloader -> AddVariable("pj1", "pj1", "", 'D')
+   dataloader -> AddVariable("pj2", "pj2", "", 'D')
+   dataloader -> AddVariable("ej1", "ej1", "", 'D')
+   dataloader -> AddVariable("ej2", "ej2", "", 'D')
+   dataloader -> AddVariable("nchadj1", "nchadj1", "", 'D')
+   dataloader -> AddVariable("nchadj2", "nchadj2", "", 'D')
+   dataloader -> AddVariable("nconstj1", "nconstj1", "", 'D')
 
    /*
    m_myTree_Event->Branch("EventWeight",           &EventWeight); /// comment in once fixed !!!!!
@@ -173,7 +169,7 @@ void TrainMVAEventBoosted(TChain *fChain){
    dataloader->AddSignalTree    (fChain,     signalWeight);
    dataloader->AddBackgroundTree(fChain,     backgroundWeight);
 
-   TCut mySigDef = "is_Signal == 1 && nJets >= 1 && nFJets >= 2 && m_H > 90. && m_H < 140.";
+   TCut mySigDef = "is_Signal == 1 && nJets >= 1 && nFJets >= 2 && m_H > 90. && m_H < 140.";   // May need to alter here!
    TCut myBkgDef = "is_Signal == 3 && nJets >= 1 && nFJets >= 2 && m_H > 90. && m_H < 140.";
 
    dataloader->PrepareTrainingAndTestTree(mySigDef, myBkgDef, "SplitMode=Random:NormMode=NumEvents:!V:nTrain_Signal=0:nTest_Signal=0:nTrain_Background=0:nTest_Background=0");
