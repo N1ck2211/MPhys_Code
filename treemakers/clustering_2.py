@@ -113,11 +113,32 @@ class RDFanalysis:
         df = df.Define("jj_e", "JetClusteringUtils::get_e({})".format(jetClusteringHelper.jets), )
         df = df.Define("jj_pt", "JetClusteringUtils::get_pt({})".format(jetClusteringHelper.jets), )
 
+        # Define the scores for isolated jets - for MVA
+        df = df.Define("qtagj1", "recojet_isQ[0]")
+        df = df.Define("qtagj2", "recojet_isQ[1]")
+        
+        df = df.Define("gtagj1", "recojet_isG[0]")
+        df = df.Define("gtagj2", "recojet_isG[1]")
+
+        df = df.Define("pj1", "jj_p[0]")
+        df = df.Define("pj2", "jj_p[1]")
+
+        df = df.Define("ej1", "jj_e[0]")
+        df = df.Define("ej2", "jj_e[1]")
+
+        df = df.Define("nchadj1", "jet_nchad[0]")
+        df = df.Define("nchadj2", "jet_nchad[1]")
+
+        df = df.Define("nconstj1", "jet_nconst[0]")
+        df = df.Define("nconstj2", "jet_nconst[1]")
+
         return df
 
     # Mandatory: output function, please make sure you return the branch-list as a python list
     def output():
-        branchList = ["jj_m", "jj_p", "jj_theta", "jj_phi", "jj_e", "jj_pt", "jj_eta"]
+        branchList = ["jj_m", "jj_p", "jj_theta", "jj_phi", "jj_e", 
+                      "jj_pt", "jj_eta", "qtagj1", "qtagj2", "gtagj1",
+                        "gtagj2", "pj1", "pj2", "ej1", "ej2", "nchadj1", "nchadj2", "nconstj1", "nconstj2"]
 
         # outputs jet properties
         branchList += jetClusteringHelper.outputBranches()

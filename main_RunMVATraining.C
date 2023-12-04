@@ -142,7 +142,7 @@ void TrainMVAEventBoosted(TChain *fChain){
    dataloader -> AddVariable("qtagj2", "qtagj2", "", 'D')
    dataloader -> AddVariable("gtagj1", "gtagj1", "", 'D')
    dataloader -> AddVariable("gtagj2", "gtagj2", "", 'D')
-   dataloader -> AddVariable("jjmass", "jjmass", "", 'D')
+   dataloader -> AddVariable("jj_m", "jj_m", "", 'D')
    dataloader -> AddVariable("pj1", "pj1", "", 'D')
    dataloader -> AddVariable("pj2", "pj2", "", 'D')
    dataloader -> AddVariable("ej1", "ej1", "", 'D')
@@ -150,6 +150,7 @@ void TrainMVAEventBoosted(TChain *fChain){
    dataloader -> AddVariable("nchadj1", "nchadj1", "", 'D')
    dataloader -> AddVariable("nchadj2", "nchadj2", "", 'D')
    dataloader -> AddVariable("nconstj1", "nconstj1", "", 'D')
+   dataloader -> AddVariable("nconstj2", "nconstj2", "", 'D')
 
    /*
    m_myTree_Event->Branch("EventWeight",           &EventWeight); /// comment in once fixed !!!!!
