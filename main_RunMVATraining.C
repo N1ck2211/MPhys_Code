@@ -138,19 +138,19 @@ void TrainMVAEventBoosted(TChain *fChain){
    TMVA::DataLoader *dataloader = new TMVA::DataLoader("dataset");
 
     // Adding variables:
-   dataloader -> AddVariable("qtagj1", "qtagj1", "", 'D');
-   dataloader -> AddVariable("qtagj2", "qtagj2", "", 'D');
-   dataloader -> AddVariable("gtagj1", "gtagj1", "", 'D');
-   dataloader -> AddVariable("gtagj2", "gtagj2", "", 'D');
-   dataloader -> AddVariable("jj_m", "jj_m", "", 'D');
-   dataloader -> AddVariable("pj1", "pj1", "", 'D');
-   dataloader -> AddVariable("pj2", "pj2", "", 'D');
-   dataloader -> AddVariable("ej1", "ej1", "", 'D');
-   dataloader -> AddVariable("ej2", "ej2", "", 'D');
-   dataloader -> AddVariable("nchadj1", "nchadj1", "", 'D');
-   dataloader -> AddVariable("nchadj2", "nchadj2", "", 'D');
-   dataloader -> AddVariable("nconstj1", "nconstj1", "", 'D');
-   dataloader -> AddVariable("nconstj2", "nconstj2", "", 'D');
+   dataloader->AddVariable("qtagj1", "qtagj1", "", 'D');
+   dataloader->AddVariable("qtagj2", "qtagj2", "", 'D');
+   dataloader->AddVariable("gtagj1", "gtagj1", "", 'D');
+   dataloader->AddVariable("gtagj2", "gtagj2", "", 'D');
+   dataloader->AddVariable("jj_m", "jj_m", "", 'D');
+   dataloader->AddVariable("pj1", "pj1", "", 'D');
+   dataloader->AddVariable("pj2", "pj2", "", 'D');
+   dataloader->AddVariable("ej1", "ej1", "", 'D');
+   dataloader->AddVariable("ej2", "ej2", "", 'D');
+   dataloader->AddVariable("nchadj1", "nchadj1", "", 'D');
+   dataloader->AddVariable("nchadj2", "nchadj2", "", 'D');
+   dataloader->AddVariable("nconstj1", "nconstj1", "", 'D');
+   dataloader->AddVariable("nconstj2", "nconstj2", "", 'D');
 
    /*
    m_myTree_Event->Branch("EventWeight",           &EventWeight); /// comment in once fixed !!!!!
@@ -167,8 +167,8 @@ void TrainMVAEventBoosted(TChain *fChain){
    float signalWeight     = 1.0;
    float backgroundWeight = 1.0;
 
-   dataloader->AddSignalTree    (fChain,     signalWeight);
-   dataloader->AddBackgroundTree(fChain,     backgroundWeight);
+   dataloader->AddSignalTree(fChain, signalWeight);
+   dataloader->AddBackgroundTree(fChain, backgroundWeight);
 
    TCut mySigDef = "is_Signal == 1 && nJets >= 1 && nFJets >= 2 && m_H > 90. && m_H < 140.";   // May need to alter here!
    TCut myBkgDef = "is_Signal == 3 && nJets >= 1 && nFJets >= 2 && m_H > 90. && m_H < 140.";
@@ -240,11 +240,11 @@ std::vector<TTree*> GetTrees(TChain *fChain){
 
     std::vector<TTree*> trees;
     TTree    *Tree1 = fChain->CloneTree(0);
-              Tree1->SetName("lvbb");
+              Tree1->SetName("gg");
     TTree    *Tree2 = fChain->CloneTree(0);
-              Tree1->SetName("qqbb");
-    TTree    *Tree3 = fChain->CloneTree(0);
-              Tree3->SetName("background");
+              Tree1->SetName("qq");
+    // TTree    *Tree3 = fChain->CloneTree(0);
+    //           Tree3->SetName("background");
 
     int      is_Signal;
     fChain->SetBranchAddress("is_Signal", &is_Signal);
@@ -253,14 +253,14 @@ std::vector<TTree*> GetTrees(TChain *fChain){
         fChain->GetEntry(jentry);
         if(is_Signal == 1)Tree1->Fill();
         else if(is_Signal == 2)Tree2->Fill();
-        else if(is_Signal == 3)Tree3->Fill();
+        // else if(is_Signal == 3)Tree3->Fill();
     }
     Tree1->Print();
     Tree2->Print();
-    Tree3->Print();
+    // Tree3->Print();
     trees.push_back(Tree1);
     trees.push_back(Tree2);
-    trees.push_back(Tree3);
+    // trees.push_back(Tree3);
     return trees;
 }
 
