@@ -11,10 +11,10 @@ processList = {
 # prodTag = "FCCee/winter2023/IDEA/"
 
 # Optional: output directory, default is local running directory
-outputDir = "./outputs/treemaker/clustered_jets/"
+outputDir = "./outputs/treemaker/clustered_jets/mva_data"
 
 # Define the input dir (optional)
-inputDir = "/eos/experiment/fcc/ee/generation/DelphesEvents/winter2023/IDEA/"
+inputDir = "./outputs/treemaker/clustered_jets/"
 
 # additional/custom C++ functions, defined in header files (optional)
 includePaths = ["functions.h"]
