@@ -64,8 +64,6 @@ def build_graph(df, dataset):
     results.append(df.Histo1D(("scoresum_C", "", *bins_score), "scoresum_C"))
     results.append(df.Histo1D(("scoresum_G", "", *bins_score), "scoresum_G"))
 
-    results.append(df.Histo1D(("N_G", "", *bins_n), "N_G"))
-
     #########
     ### CUT 0: all events
     #########
