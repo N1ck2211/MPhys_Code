@@ -74,24 +74,24 @@ def build_graph(df, dataset):
     #########
     ### CUT 1: Number Chad
     #########
-    df = df.Filter("NChad[0] > 12")
-    df = df.Filter("NChad[1] > 8")
+    df = df.Filter("jet_nchad[0] > 12")
+    df = df.Filter("jet_nchad[1] > 8")
     df = df.Define("cut1", "1")
     results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut1"))
 
     #########
     ### CUT 2: Number NConst
     #########
-    df = df.Filter("NConst[0] > 12")
-    df = df.Filter("NConst[1] > 8")
+    df = df.Filter("jet_nconst[0] > 12")
+    df = df.Filter("jet_nconst[1] > 8")
     df = df.Define("cut2", "2")
     results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut2"))
 
     #########
     ### CUT 3: Eta
     #########
-    df = df.Filter("Eta[0] > -4")
-    df = df.Filter("Eta[1] > -4")
+    df = df.Filter("jj_eta[0] > -4")
+    df = df.Filter("jj_eta[1] > -4")
     df = df.Define("cut3", "3")
     results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut3"))
 
