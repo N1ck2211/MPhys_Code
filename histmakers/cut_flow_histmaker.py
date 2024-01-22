@@ -55,25 +55,13 @@ def build_graph(df, dataset):
     df = df.Define("weight", "1.0")
     weightsum = df.Sum("weight")
 
-    #########
-    ### CUT: cut on the jet tagging score to select H->bb events
-    #########
-
-    df = df.Define('Jet_One', 'recojet_isB[0]')
-    df = df.Define('Jet_Two', 'recojet_isB[1]')
-
     df = df.Define("scoresum_B", "recojet_isB[0] + recojet_isB[1]")
     df = df.Define("scoresum_Q", "recojet_isQ[0] + recojet_isQ[1]")
     df = df.Define("scoresum_S", "recojet_isS[0] + recojet_isS[1]")
     df = df.Define("scoresum_C", "recojet_isC[0] + recojet_isC[1]")
     df = df.Define("scoresum_G", "recojet_isG[0] + recojet_isG[1]")
-
-    df = df.Define('N_G', "scoresum_B * 10000000")
     
     # Create Histograms for individual jets
-    results.append(df.Histo1D(('Jet_One', '', *bins_score), 'Jet_One'))
-    results.append(df.Histo1D(('Jet_Two', '', *bins_score), 'Jet_Two'))
-
     results.append(df.Histo1D(("scoresum_B", "", *bins_score), "scoresum_B"))
     results.append(df.Histo1D(("scoresum_Q", "", *bins_score), "scoresum_Q"))
     results.append(df.Histo1D(("scoresum_S", "", *bins_score), "scoresum_S"))
@@ -81,16 +69,84 @@ def build_graph(df, dataset):
     results.append(df.Histo1D(("scoresum_G", "", *bins_score), "scoresum_G"))
 
     results.append(df.Histo1D(("N_G", "", *bins_n), "N_G"))
-    
-    df = df.Filter("scoresum_B > 1.8")
 
-    results.append(df.Histo1D(("jj_p", "Number of Events of a Given Momentum, Selected via a cut of Gluon/Quark Tagging Score", *bins_p), "jj_p"))
+    #########
+    ### CUT 0: all events
+    #########
+    df = df.Define("cut0", "0")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut0"))
+
+
+    #########
+    ### CUT 1: Number Chad
+    #########
+    df = df.Filter("NChad[0] > 12")
+    df = df.Filter("NChad[1] > 8")
+    df = df.Define("cut1", "1")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut1"))
+
+    #########
+    ### CUT 2: Number NConst
+    #########
+    df = df.Filter("NConst[0] > 12")
+    df = df.Filter("NConst[1] > 8")
+    df = df.Define("cut2", "2")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut2"))
+
+    #########
+    ### CUT 3: Eta
+    #########
+    df = df.Filter("Eta[0] > -4")
+    df = df.Filter("Eta[1] > -4")
+    df = df.Define("cut3", "3")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut3"))
+
+    #########
+    ### CUT 4: Momentum
+    #########
+    df = df.Filter("jj_p[0] > 36")
+    df = df.Filter("jj_p[1] > 40")
+    df = df.Define("cut4", "4")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut4"))
+
+    #########
+    ### CUT 5: Energy
+    #########
+    df = df.Filter("jj_e[0] > 62")
+    df = df.Filter("jj_p[1] > 48")
+    df = df.Define("cut5", "5")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut5"))
+
+
+    #########
+    ### CUT 6: Light Score
+    #########
+    df = df.Filter("recojet_isQ[0] > 0.02")
+    df = df.Filter("recojet_isQ[1] > 0.02")
+    df = df.Define("cut6", "6")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut6"))
+
+    #########
+    ### CUT 7: Gluon Score
+    #########
+    df = df.Filter("recojet_isG[0] > 0.14")
+    df = df.Filter("recojet_isG[1] > 0.1")
+    df = df.Define("cut7", "7")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut7"))
+
+    #########
+    ### CUT 8: Mass
+    #########
+    df = df.Filter("jj_m > 110")
+    df = df.Define("cut8", "8")
+    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut8"))
+
+    results.append(df.Histo1D(("jj_p", "", *bins_p), "jj_p"))
 
     results.append(df.Histo1D(("jj_theta", "", *bins_theta), "jj_theta"))
     results.append(df.Histo1D(("jj_phi", "", *bins_phi), "jj_phi"))
     results.append(df.Histo1D(("jj_m", "", *bins_m_jj), "jj_m"))
     results.append(df.Histo1D(("jj_eta", "", *bins_m_jj), "jj_eta"))
-    # results.append(df.Histo1D(("jj_q", "", *bins_charge), "jj_q"))
 
     results.append(df.Histo1D(("jj_e", "", *bins_e), "jj_e"))
     results.append(df.Histo1D(("jj_pt", "", *bins_p), "jj_pt"))
