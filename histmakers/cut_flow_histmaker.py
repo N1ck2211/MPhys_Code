@@ -1,7 +1,7 @@
 
 # list of processes (mandatory)
 processList = {
-    "wzp6_ee_Hgg_ecm125": {"fraction": 0.1},
+    "wzp6_ee_Hgg_ecm125": {"fraction": 0.1}, "wzp6_ee_qq_ecm125": {"fraction": 0.1},
 }
 
 # Production tag when running over EDM4Hep centrally produced events, this points to the yaml files for getting sample statistics (mandatory)
@@ -22,10 +22,6 @@ nCPUS = -1
 # scale the histograms with the cross-section and integrated luminosity
 doScale = True
 intLumi = 10000000  # 10 /ab
-
-#score_to_cut = 1.8
-
-#cut_phrase = "scoresum_Q >" + str(score_to_cut)
 
 # define some binning for various histograms
 bins_p_mu = (2000, 0, 200)  # 100 MeV bins
