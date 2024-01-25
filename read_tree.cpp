@@ -24,9 +24,11 @@ void readTree(const char* fileName, const char* treeName, const char* branchName
     }
 
     // Set the branch address
+
     // Assuming the branch contains flaots:
-   // float_t branchValue;
-   // For RVEct values:
+    // float_t branchValue;
+
+    // For RVEct values:
 
     ROOT::VecOps::RVec<float> *branchValue = nullptr;
     tree->SetBranchAddress(branchName, &branchValue);
@@ -35,10 +37,10 @@ void readTree(const char* fileName, const char* treeName, const char* branchName
 
     Long64_t nEntries = tree->GetEntries();
     outputfile.open("output.csv");
-    
-    float_t out_val;
+
+    ROOT::VecOps::RVec<float> out_val;
     // Loop over entries
-    for (Long64_t iEntry = 0; iEntry < nEntries * 0.1; ++iEntry) {
+    for (Long64_t iEntry = 0; iEntry < nEntries; ++iEntry) {
         // Read the entry
         tree->GetEntry(iEntry);
 
@@ -53,13 +55,13 @@ void readTree(const char* fileName, const char* treeName, const char* branchName
 
     // Close the file
     file->Close();
-    delete branchValue;
+    //delete branchValue;
 }
 
 int main() {
-    const char* fileName = "wzp6_ee_Hgg_ecm125.root";
+    const char* fileName = "merged_files.root";
     const char* treeName = "events";
-    const char* branchName = "jj_q";
+    const char* branchName = "jj_eta";
 
     readTree(fileName, treeName, branchName);
 
