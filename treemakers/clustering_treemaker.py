@@ -95,7 +95,7 @@ class RDFanalysis:
         # tagger inference
         df = jetFlavourHelper.inference(weaver_preproc, weaver_model, df)
 
-        # CUT 1: Njets = 2
+        # CUT 1: Njets 2+
         df = df.Filter("event_njet > 1")
 
         df = df.Define("jets_p4", "JetConstituentsUtils::compute_tlv_jets({})".format(jetClusteringHelper.jets), )
