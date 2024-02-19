@@ -10,10 +10,10 @@ processList = {
 procDict = "FCCee_procDict_winter2023_IDEA.json"
 
 # Define the input dir (optional)
-inputDir = "./outputs/treemaker/clustered_jets"
+inputDir = "./full_clustering_output/treemaker"
 
 # Optional: output directory, default is local running directory
-outputDir = "./outputs/histmaker/Hgg/bottom_only"
+outputDir = "./full_clustering_output/isolation/signal/bottom"
 
 # optional: ncpus, default is 4, -1 uses all cores available
 nCPUS = -1
@@ -54,10 +54,6 @@ def build_graph(df, dataset):
     df = df.Define("weight", "1.0")
     weightsum = df.Sum("weight")
 
-    #########
-    ### CUT: cut on the jet tagging score to select H->bb events
-    #########
-
     df = df.Define('Jet_One', 'recojet_isB[0]')
     df = df.Define('Jet_Two', 'recojet_isB[1]')
 
@@ -66,8 +62,6 @@ def build_graph(df, dataset):
     df = df.Define("scoresum_S", "recojet_isS[0] + recojet_isS[1]")
     df = df.Define("scoresum_C", "recojet_isC[0] + recojet_isC[1]")
     df = df.Define("scoresum_G", "recojet_isG[0] + recojet_isG[1]")
-
-    df = df.Define('N_G', "scoresum_B * 10000000")
     
     # Create Histograms for individual jets
     results.append(df.Histo1D(('Jet_One', '', *bins_score), 'Jet_One'))
@@ -79,11 +73,13 @@ def build_graph(df, dataset):
     results.append(df.Histo1D(("scoresum_C", "", *bins_score), "scoresum_C"))
     results.append(df.Histo1D(("scoresum_G", "", *bins_score), "scoresum_G"))
 
-    results.append(df.Histo1D(("N_G", "", *bins_n), "N_G"))
+    #########
+    ### CUT: cut on the jet tagging score to select H->bb events
+    #########
     
     df = df.Filter("scoresum_B > 1.8")
 
-    results.append(df.Histo1D(("jj_p", "Number of Events of a Given Momentum, Selected via a cut of Gluon/Quark Tagging Score", *bins_p), "jj_p"))
+    results.append(df.Histo1D(("jj_p", "", *bins_p), "jj_p"))
 
     results.append(df.Histo1D(("jj_theta", "", *bins_theta), "jj_theta"))
     results.append(df.Histo1D(("jj_phi", "", *bins_phi), "jj_phi"))
