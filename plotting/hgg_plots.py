@@ -27,10 +27,10 @@ hists["jj_m"] = {
     "logy": False,
     "stack": True,
     "rebin": 2,
-    "xmin": 50,
+    "xmin": 0,
     "xmax": 150,
     "ymin": 0,
-    "ymax": 1e3,
+    "ymax": 1e5,
     "xtitle": "m_{jj} (GeV)",
     "ytitle": "Events / 2 GeV",
 }
