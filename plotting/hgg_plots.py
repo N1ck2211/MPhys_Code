@@ -9,8 +9,8 @@ energy = 125.0
 collider = "FCC-ee"
 formats = ["png"]
 
-outdir = './outputs/plots/Hgg/no_cut/'
 inputDir = "./outputs/histmaker/Hgg/no_cut"
+outdir = './outputs/plots/Hgg/no_cut/'
 
 plotStatUnc = True
 
@@ -113,6 +113,19 @@ hists["jj_p"] = {
     "ytitle":   "Events ",
 }
 
+hists["jj_pt"] = {
+    "output":   "jj_pt",
+    "logy":     False,
+    "stack":    True,
+    "rebin":    2,
+    "xmin":     0,
+    "xmax":     20,
+    "ymin":     0,
+    "ymax":     8e3,
+    "xtitle":   "pt(jet) (GeV)",
+    "ytitle":   "Events ",
+}
+
 hists["jj_phi"] = {
      "output": "jj_phi",
      "logy": False,
@@ -139,18 +152,32 @@ hists["jj_theta"] = {
      "ytitle": "Events",
 }
 
-hists["jj_q"] = {
-     "output": "jj_q",
+
+hists["jj_eta"] = {
+     "output": "jj_eta",
      "logy": False,
      "stack": True,
      "rebin": 2,
-     "xmin": -4.5,
-     "xmax": 4.5,
+     "xmin": -3,
+     "xmax": 3,
      "ymin": 0,
-     "ymax": 30e3,
-     "xtitle": "charge",
+     "ymax": 700,
+     "xtitle": "#eta",
      "ytitle": "Events",
 }
+
+# hists["jj_q"] = {
+#      "output": "jj_q",
+#      "logy": False,
+#      "stack": True,
+#      "rebin": 2,
+#      "xmin": -4.5,
+#      "xmax": 4.5,
+#      "ymin": 0,
+#      "ymax": 30e3,
+#      "xtitle": "charge",
+#      "ytitle": "Events",
+# }
 
 hists["scoresum_Q"] = {
     "output": "scoresum_Q",
