@@ -1,7 +1,5 @@
 # list of processes (mandatory)
-processList = {
-    "wzp6_ee_qq_ecm125": {"fraction": 0.1},
-}
+processList = {"wzp6_ee_Hgg_ecm125": {"fraction": 1},}
 
 # Production tag when running over EDM4Hep centrally produced events, this points to the yaml files for getting sample statistics (mandatory)
 # prodTag = "FCCee/winter2023/IDEA/"
@@ -10,16 +8,16 @@ processList = {
 procDict = "FCCee_procDict_winter2023_IDEA.json"
 
 # Define the input dir (optional)
-inputDir = "./outputs/treemaker/combined_jets"
+inputDir = "./full_clustering_output/treemaker"
 
 # Optional: output directory, default is local running directory
-outputDir = "./outputs/histmaker/Zgammaqq/no_cut"
+outputDir = "./full_clustering_output/histmaker"
 
 # optional: ncpus, default is 4, -1 uses all cores available
 nCPUS = -1
 
 # scale the histograms with the cross-section and integrated luminosity
-doScale = True
+doScale = False
 intLumi = 10000000  # 10 /ab
 
 score_to_cut = 0.0
@@ -54,10 +52,6 @@ def build_graph(df, dataset):
     df = df.Define("weight", "1.0")
     weightsum = df.Sum("weight")
 
-    #########
-    ### CUT: cut on the jet tagging score to select H->bb events
-    #########
-
     df = df.Define('Jet_One', 'recojet_isB[0]')
     df = df.Define('Jet_Two', 'recojet_isB[1]')
 
@@ -67,8 +61,6 @@ def build_graph(df, dataset):
     df = df.Define("scoresum_C", "recojet_isC[0] + recojet_isC[1]")
     df = df.Define("scoresum_G", "recojet_isG[0] + recojet_isG[1]")
 
-    df = df.Define('N_G', "scoresum_B * 10000000")
-    
     # Create Histograms for individual jets
     results.append(df.Histo1D(('Jet_One', '', *bins_score), 'Jet_One'))
     results.append(df.Histo1D(('Jet_Two', '', *bins_score), 'Jet_Two'))
@@ -79,17 +71,17 @@ def build_graph(df, dataset):
     results.append(df.Histo1D(("scoresum_C", "", *bins_score), "scoresum_C"))
     results.append(df.Histo1D(("scoresum_G", "", *bins_score), "scoresum_G"))
 
-    results.append(df.Histo1D(("N_G", "", *bins_n), "N_G"))
-
     #df = df.Filter(cut_phrase)
 
-    results.append(df.Histo1D(("jj_p", "Number of Events of a Given Momentum, Selected via a cut of Gluon/Quark Tagging Score", *bins_p), "jj_p"))
+    results.append(df.Histo1D(("jj_p", "", *bins_p), "jj_p"))
 
     results.append(df.Histo1D(("jj_theta", "", *bins_theta), "jj_theta"))
     results.append(df.Histo1D(("jj_phi", "", *bins_phi), "jj_phi"))
     results.append(df.Histo1D(("jj_m", "", *bins_m_jj), "jj_m"))
-    results.append(df.Histo1D(("jj_q", "", *bins_charge), "jj_q"))
+    results.append(df.Histo1D(("jj_eta", "", *bins_m_jj), "jj_eta"))
+    # results.append(df.Histo1D(("jj_q", "", *bins_charge), "jj_q"))
 
     results.append(df.Histo1D(("jj_e", "", *bins_e), "jj_e"))
+    results.append(df.Histo1D(("jj_pt", "", *bins_p), "jj_pt"))
 
     return results, weightsum
