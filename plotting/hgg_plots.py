@@ -27,10 +27,8 @@ hists["jj_m"] = {
     "logy": False,
     "stack": True,
     "rebin": 2,
-    "xmin": 0,
+    "xmin": 40,
     "xmax": 150,
-    "ymin": 0,
-    "ymax": 1e5,
     "xtitle": "m_{jj} (GeV)",
     "ytitle": "Events / 2 GeV",
 }
@@ -42,8 +40,6 @@ hists["jj_e"] = {
     "rebin": 2,
     "xmin": 0,
     "xmax": 60,
-    "ymin": 0,
-    "ymax": 1e9,
     "xtitle": "Energy (GeV)",
     "ytitle": "Events",
 }
@@ -55,11 +51,10 @@ hists["scoresum_B"] = {
     "rebin": 1,
     "xmin": 0,
     "xmax": 2.0,
-    "ymin": 1,
-    "ymax": 1e9,
     "xtitle": "p_{1}(B) + p_{2}(B)",
     "ytitle": "Events",
 }
+
 
 hists['Jet_One'] = {
     "output": "Jet_One",
@@ -68,8 +63,6 @@ hists['Jet_One'] = {
     "rebin": 1,
     "xmin": 0,
     "xmax": 1.0,
-    "ymin": 1,
-    "ymax": 1e9,
     "xtitle": "p_{1}(G)",
     "ytitle": "Events",
 }
@@ -81,8 +74,6 @@ hists['Jet_Two'] = {
     "rebin": 1,
     "xmin": 0,
     "xmax": 1.0,
-    "ymin": 1,
-    "ymax": 1e9,
     "xtitle": "p_{2}(G)",
     "ytitle": "Events",
 }
@@ -93,9 +84,7 @@ hists["jj_p"] = {
     "stack":    True,
     "rebin":    2,
     "xmin":     0,
-    "xmax":     20,
-    "ymin":     0,
-    "ymax":     8e3,
+    "xmax":     80,
     "xtitle":   "p(jet) (GeV)",
     "ytitle":   "Events ",
 }
@@ -106,9 +95,7 @@ hists["jj_pt"] = {
     "stack":    True,
     "rebin":    2,
     "xmin":     0,
-    "xmax":     20,
-    "ymin":     0,
-    "ymax":     8e3,
+    "xmax":     80,
     "xtitle":   "pt(jet) (GeV)",
     "ytitle":   "Events ",
 }
@@ -120,8 +107,6 @@ hists["jj_phi"] = {
      "rebin": 2,
      "xmin": -1.5,
      "xmax": 1.5,
-     "ymin": 0,
-     "ymax": 100,
      "xtitle": "#phi",
      "ytitle": "Events",
  }
@@ -132,9 +117,7 @@ hists["jj_theta"] = {
      "stack": True,
      "rebin": 2,
      "xmin": 0,
-     "xmax": 4,
-     "ymin": 0,
-     "ymax": 700,
+     "xmax": 3.5,
      "xtitle": "#theta",
      "ytitle": "Events",
 }
@@ -147,8 +130,6 @@ hists["jj_eta"] = {
      "rebin": 2,
      "xmin": -3,
      "xmax": 3,
-     "ymin": 0,
-     "ymax": 700,
      "xtitle": "#eta",
      "ytitle": "Events",
 }
@@ -173,8 +154,6 @@ hists["scoresum_Q"] = {
     "rebin": 1,
     "xmin": 0,
     "xmax": 2.0,
-    "ymin": 1,
-    "ymax": 1e9,
     "xtitle": "p_{1}(Q) + p_{2}(Q)",
     "ytitle": "Events",
 }
@@ -186,8 +165,6 @@ hists["scoresum_S"] = {
     "rebin": 1,
     "xmin": 0,
     "xmax": 2.0,
-    "ymin": 1,
-    "ymax": 1e9,
     "xtitle": "p_{1}(S) + p_{2}(S)",
     "ytitle": "Events",
 }
@@ -199,8 +176,6 @@ hists["scoresum_C"] = {
     "rebin": 1,
     "xmin": 0,
     "xmax": 2.0,
-    "ymin": 1,
-    "ymax": 1e9,
     "xtitle": "p_{1}(C) + p_{2}(C)",
     "ytitle": "Events",
 }
@@ -212,8 +187,6 @@ hists["scoresum_G"] = {
     "rebin": 1,
     "xmin": 0,
     "xmax": 2.0,
-    "ymin": 1,
-    "ymax": 1e9,
     "xtitle": "p_{1}(G) + p_{2}(G)",
     "ytitle": "Events",
 }
