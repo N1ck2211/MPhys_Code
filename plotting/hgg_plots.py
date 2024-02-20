@@ -61,19 +61,6 @@ hists["scoresum_B"] = {
     "ytitle": "Events",
 }
 
-hists["N_G"] = {
-    "output": "N_G",
-    "logy": True,
-    "stack": True,
-    "rebin": 1,
-    "xmin": 0,
-    "xmax": 2 * 10000000,
-    "ymin": 1,
-    "ymax": 1e9,
-    "xtitle": "p_{1}(G) + p_{2}(G)",
-    "ytitle": "Events",
-}
-
 hists['Jet_One'] = {
     "output": "Jet_One",
     "logy": True,
