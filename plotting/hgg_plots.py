@@ -9,8 +9,8 @@ energy = 125.0
 collider = "FCC-ee"
 formats = ["png"]
 
-inputDir = "./outputs/histmaker/Hgg/no_cut"
-outdir = './outputs/plots/Hgg/no_cut/'
+inputDir = "./full_clustering_output/histmaker"
+outdir = './full_clustering_output/plots/hgg'
 
 plotStatUnc = True
 
