@@ -39,7 +39,7 @@ bins_n  = (50, 0, 20000000)
 
 bins_theta = (500, -5, 5)
 bins_eta = (1200, -6, 6)
-bins_phi = (500, -1, 1)
+bins_phi = (500, 0, 6.4)
 
 bins_count = (50, 0, 50)
 bins_charge = (9, -4.5, 4.5)
