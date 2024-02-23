@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
 
 
 def get_n(nb_name, ns_name):
-    global Nb, Ns
+
     # Read in data
     with open(nb_name, 'r') as data:
         Nb = []
@@ -17,8 +18,8 @@ def get_n(nb_name, ns_name):
             row = line.split(',')
             Ns.append(float(row[0]))
 
-    Nb = np.array(Nb)
-    Ns = np.array(Ns)
+    Nb = np.array(Nb) * 10 * 363          # Scaling by IntLumi and CrossSection
+    Ns = np.array(Ns) * 10 * 7.38400e-5
 
     return Nb, Ns
 
@@ -34,13 +35,13 @@ def get_name(full_file_name):
 
 
 def plot_cut_function(cut, nb_name, ns_name):
-    nb, ns = get_n(nb_name, ns_name)
+    Nb, Ns = get_n(nb_name, ns_name)
 
-    # Get the name of the feature:
-    name = get_name(nb_name)
+    # Get the f_name of the feature:
+    feature_name = get_name(nb_name)
 
     # Calculate function
-    func = ns / np.sqrt(ns + nb)
+    func = Ns / np.sqrt(Ns + Nb)
 
     nan_pos = np.isnan(func)
     func[nan_pos] = 0
@@ -49,37 +50,40 @@ def plot_cut_function(cut, nb_name, ns_name):
     peak_ind = np.argmax(func)
     print("The peak is at %.2f" % cut[peak_ind])
 
+    # peaks = find_peaks(func)[0]
+    # print(cut[peaks])
+
     # Plot
     plt.plot(cut, func)
-    plt.title(f'Ratio of Cuts for {name}')
+    plt.title(f'Ratio of Cuts for {feature_name}')
     plt.xlabel('Cut')
     plt.ylabel('f(cut)')
-    plt.savefig(f'full_set_cut_plots/cut_functions/{name}')
+    plt.savefig(f'correct_full_set_cuts/cut_sig/{feature_name}')
     plt.show()
 
-    return nb, ns, name
+    return Nb, Ns, feature_name
 
 
-def plot_histogram(cuts, N, name, feature_type):
+def plot_histogram(cut, N, f_name, feature_type):
 
-    plt.hist(cuts, cuts, weights=N, align='left')
+    plt.hist(cut, cut, weights=N, align='left')
     plt.xlabel('Cut')
 
     if feature_type:
-        plt.title(f'Cuts for Signal {name}')
+        plt.title(f'Cuts for Signal {f_name}')
         plt.ylabel('Ns')
-        plt.savefig(f'full_set_cut_plots/signal_hist/{name}')
+        plt.savefig(f'correct_full_set_cuts/signal_h/{f_name}')
     else:
-        plt.title(f'Cuts for Background {name}')
+        plt.title(f'Cuts for Background {f_name}')
         plt.ylabel('Nb')
-        plt.savefig(f'full_set_cut_plots/background_hist/{name}')
+        plt.savefig(f'correct_full_set_cuts/background_h/{f_name}')
     plt.show()
 
 
-cuts = np.arange(0, 102, 2)
+cuts = np.arange(0, 1.02, 0.02)
 
-nb, ns, name = plot_cut_function(cuts, nb_name='data/background_nconst1.csv',
-                                 ns_name='data/signal_nconst1_1.csv')
+nb, ns, name = plot_cut_function(cuts, nb_name='data/background_jj_gg1.csv',
+                                 ns_name='data/signal_jj_gg1_1.csv')
 
 plot_histogram(cuts, ns, name, 1)
 plot_histogram(cuts, nb, name, 0)
