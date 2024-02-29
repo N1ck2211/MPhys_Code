@@ -20,7 +20,7 @@ nCPUS = -1
 
 # scale the histograms with the cross-section and integrated luminosity
 doScale = True
-intLumi = 10000000  # 10 /ab
+intLumi = 10000000 # 10 /ab
 
 # define some binning for various histograms
 bins_p_mu = (2000, 0, 200)  # 100 MeV bins
