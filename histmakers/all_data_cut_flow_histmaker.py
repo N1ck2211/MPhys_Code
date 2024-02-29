@@ -4,7 +4,7 @@ processList = {
 }
 
 # Production tag when running over EDM4Hep centrally produced events, this points to the yaml files for getting sample statistics (mandatory)
-# prodTag = "FCCee/winter2023/IDEA/"
+#prodTag = "FCCee/winter2023/IDEA/"
 
 # Link to the dictionary that contains all the cross-section information etc... (mandatory)
 procDict = "FCCee_procDict_winter2023_IDEA.json"
@@ -38,10 +38,12 @@ bins_theta = (500, -5, 5)
 bins_eta = (600, -3, 3)
 bins_phi = (500, -1, 1)
 
-bins_count = (50, 0, 50)
+bins_count = (8, 0, 9)
 bins_charge = (9, -4.5, 4.5)
 bins_iso = (500, 0, 5)
 bins_e = (600, 0, 60)
+
+bins_flow = (100, 0, 100)
 
 # build_graph function that contains the analysis logic, cuts and histograms (mandatory)
 def build_graph(df, dataset):
@@ -54,86 +56,102 @@ def build_graph(df, dataset):
     ### CUT 0: all events
     #########
     df = df.Define("cut0", "0")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut0"))
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "cut0"))
 
     #########
     ### CUT 1: Number Chad
     #########
-    df = df.Filter("jet_nchad[0] > 48")
-    df = df.Filter("jet_nchad[1] > 38")
-    df = df.Define("cut1", "1")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut1"))
+    df = df.Filter("jet_nchad[0] > 10")
+    df = df.Filter("jet_nchad[1] > 7")
+    df = df.Define("CHad", "1")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "CHad"))
 
     #########
     ### CUT 2: Number NNhad
     ##########
-    df = df.Filter("jet_nnhad[0] > 12")
-    df = df.Filter("jet_nnhad[1] > 9")
-    df = df.Define("cut2", "2")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut2"))
+   # df = df.Filter("jet_nnhad[0] > 12")
+   # df = df.Filter("jet_nnhad[1] > 9")
+   # df = df.Define("cut2", "2")
+   # results.append(df.Histo1D(("cutFlow", "", *bins_flow), "cut2"))
 
     #########
     ### CUT 3: Number NConst
     #########
-    df = df.Filter("jet_nconst[0] > 96")
-    df = df.Filter("jet_nconst[1] > 76")
-    df = df.Define("cut3", "3")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut3"))
+    df = df.Filter("jet_nconst[0] > 21")
+    df = df.Filter("jet_nconst[1] > 14")
+    df = df.Define("nconst", "2")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "nconst"))
 
     #########
-    ### CUT 4: Momentum
+    ### CUT 1: Momentum
     #########
     df = df.Filter("jj_p[0] > 38")
     df = df.Filter("jj_p[1] > 46")
-    df = df.Define("cut4", "4")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut4"))
+    df = df.Define("jetp", "3")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jetp"))
 
     #########
-    ### CUT 5: Transverse Momentum
+    ### CUT 2: Transverse Momentum
     #########
-    df = df.Filter("jj_pt[0] > 46")
-    df = df.Filter("jj_pt[1] > 44")
-    df = df.Define("cut5", "5")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut5"))
+    df = df.Filter("jj_pt[0] > 45")
+    df = df.Filter("jj_pt[1] > 45")
+    df = df.Define("jetpt", "4")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jetpt"))
 
     #########
-    ### CUT 6: Energy
+    ### CUT 3: Energy
     #########
     df = df.Filter("jj_e[0] > 62")
     df = df.Filter("jj_e[1] > 50")
-    df = df.Define("cut6", "6")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut6"))
+    df = df.Define("jete", "5")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jete"))
 
     #########
-    ### CUT 7: Strange Score
+    ### CUT 4: Strange Score
     #########
-    df = df.Filter("recojet_isS[0] > 0.02")
-    df = df.Filter("recojet_isS[1] > 0.02")
-    df = df.Define("cut7", "7")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut7"))
+#    df = df.Filter("recojet_isS[0] < 0.1")
+#    df = df.Filter("recojet_isS[1] < 0.1")
+#    df = df.Define("stag", "6")
+#    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "stag"))
 
     #########
-    ### CUT 8: Light Score
+    ### CUT 5: Light Score
     #########
     df = df.Filter("recojet_isQ[0] > 0.02")
     df = df.Filter("recojet_isQ[1] > 0.02")
-    df = df.Define("cut8", "8")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut8"))
+    df = df.Define("qtag", "6")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "qtag"))
 
     #########
-    ### CUT 9: Gluon Score
+    ### CUT 6: Gluon Score
     #########
-    df = df.Filter("recojet_isG[0] > 0.86")
-    df = df.Filter("recojet_isG[1] > 0.96")
-    df = df.Define("cut9", "9")
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut9"))
+    df = df.Filter("recojet_isG[0] > 0.84")
+    df = df.Filter("recojet_isG[1] > 0.85")
+    df = df.Define("gtag", "7")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "gtag"))
 
     #########
-    ### CUT 10: Mass
+    ### CUT 7: Individual Mass
+    #########
+    df = df.Filter("jet_m[0] > 21")
+    df = df.Filter("jet_m[1] > 14")
+    df = df.Define("ind_jet_mass", "8")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "ind_jet_mass"))
+
+    #########
+    ### CUT 7: Mass
     #########
     df = df.Filter("jj_m > 120")
-    df = df.Define("cut10", 10)
-    results.append(df.Histo1D(("cutFlow", "", *bins_count), "cut10"))
+    df = df.Define("jets_mass", "9")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jets_mass"))
+
+    #########
+    ### CUT 8: Eta
+    #########
+    df = df.Filter("jj_eta[0] > -1.4")
+    df = df.Filter("jj_eta[1] > -5.2")
+    df = df.Define("jet_eta", "10")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jet_eta"))
 
     #################
 
