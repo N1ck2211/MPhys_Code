@@ -34,9 +34,9 @@ bins_m_jj = (100, 50, 150)  # 1 GeV bins
 bins_score = (50, 0, 2.0)  #
 bins_n  = (50, 0, 20000000)
 
-bins_theta = (500, -5, 5)
-bins_eta = (600, -3, 3)
-bins_phi = (500, -1, 1)
+bins_theta = (400, 0, 4)
+bins_eta = (300, -3, 3)
+bins_phi = (400, 0, 4)
 
 bins_count = (8, 0, 9)
 bins_charge = (9, -4.5, 4.5)
