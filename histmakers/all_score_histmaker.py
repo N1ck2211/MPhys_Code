@@ -33,18 +33,20 @@ bins_recoil = (200000, 0, 200)  # 1 MeV bins
 bins_cosThetaMiss = (10000, 0, 1)
 
 bins_m_jj = (100, 50, 150)  # 1 GeV bins
-bins_score = (50, 0, 2.0)  
-bins_onej_score = (50, 0, 1.0)  
+bins_score = (50, 0, 2.0)  #
 bins_n  = (50, 0, 20000000)
 
-bins_theta = (500, -5, 5)
-bins_eta = (1200, -6, 6)
-bins_phi = (500, 0, 6.4)
+bins_theta = (400, 0, 4)
+bins_eta = (300, -3, 3)
+bins_phi = (400, 0, 4)
 
-bins_count = (50, 0, 50)
+bins_count = (8, 0, 9)
 bins_charge = (9, -4.5, 4.5)
 bins_iso = (500, 0, 5)
 bins_e = (900, 0, 90)
+bins_onej_score = (50, 0, 1.0)  
+
+bins_flow = (100, 0, 100)
 
 # build_graph function that contains the analysis logic, cuts and histograms (mandatory)
 def build_graph(df, dataset):
