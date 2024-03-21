@@ -2,22 +2,18 @@ import os
 
 # list of processes
 processList = {
-    "wzp6_ee_Hgg_ecm125": {"fraction": 0.1},
-    "wzp6_ee_qq_ecm125": {"fraction": 0.1}
+    "wzp6_ee_Hgg_ecm125": {"fraction": 0.1}
 }
 
 # Production tag when running over EDM4Hep centrally produced events, this points to the yaml files for getting
 # sample statistics (mandatory)
-# prodTag = "FCCee/winter2023/IDEA/"
+#prodTag = "FCCee/winter2023/IDEA/"
 
 # Optional: output directory, default is local running directory
-outputDir = "./outputs/treemaker/clustered_jets/"
+outputDir = "./full_clustering_output/treemaker/test"
 
 # Define the input dir (optional)
 inputDir = "/eos/experiment/fcc/ee/generation/DelphesEvents/winter2023/IDEA/"
-
-# additional/custom C++ functions, defined in header files (optional)
-includePaths = ["functions.h"]
 
 # latest particle transformer model, trained on 9M jets in winter2023 samples
 model_name = "fccee_flavtagging_edm4hep_wc_v1"
@@ -86,7 +82,6 @@ class RDFanalysis:
         df = jetClusteringHelper.define(df)
 
         # define jet flavour tagging parameters
-
         jetFlavourHelper = JetFlavourHelper(collections, jetClusteringHelper.jets, jetClusteringHelper.constituents, )
 
         # define observables for tagger
@@ -95,7 +90,7 @@ class RDFanalysis:
         # tagger inference
         df = jetFlavourHelper.inference(weaver_preproc, weaver_model, df)
 
-        # CUT 1: Njets 2+
+        # CUT 1: Njets = 2
         df = df.Filter("event_njet > 1")
 
         df = df.Define("jets_p4", "JetConstituentsUtils::compute_tlv_jets({})".format(jetClusteringHelper.jets), )
@@ -112,12 +107,13 @@ class RDFanalysis:
 
         df = df.Define("jj_e", "JetClusteringUtils::get_e({})".format(jetClusteringHelper.jets), )
         df = df.Define("jj_pt", "JetClusteringUtils::get_pt({})".format(jetClusteringHelper.jets), )
+        df = df.Define("jet_m", "JetClusteringUtils::get_m({})".format(jetClusteringHelper.jets), )
 
         return df
 
     # Mandatory: output function, please make sure you return the branch-list as a python list
     def output():
-        branchList = ["jj_m", "jj_p", "jj_theta", "jj_phi", "jj_e", "jj_pt", "jj_eta"]
+        branchList = ["jj_m", "jj_p", "jj_theta", "jj_phi", "jj_e", "jj_pt", "jj_eta", "jet_m"]
 
         # outputs jet properties
         branchList += jetClusteringHelper.outputBranches()
