@@ -20,7 +20,7 @@ nCPUS = -1
 
 # scale the histograms with the cross-section and integrated luminosity
 doScale = True
-intLumi = 10000000 # 10 /ab
+intLumi = 10000000  # 10 /ab
 
 # define some binning for various histograms
 bins_p_mu = (2000, 0, 200)  # 100 MeV bins
@@ -34,14 +34,14 @@ bins_m_jj = (100, 50, 150)  # 1 GeV bins
 bins_score = (50, 0, 2.0)  #
 bins_n  = (50, 0, 20000000)
 
-bins_theta = (400, 0, 4)
-bins_eta = (300, -3, 3)
-bins_phi = (400, 0, 4)
+bins_theta = (500, -5, 5)
+bins_eta = (600, -6, 6)
+bins_phi = (600, -6, 6)
 
 bins_count = (8, 0, 9)
 bins_charge = (9, -4.5, 4.5)
 bins_iso = (500, 0, 5)
-bins_e = (600, 0, 60)
+bins_e = (900, 0, 90)
 
 bins_flow = (100, 0, 100)
 
@@ -57,6 +57,8 @@ def build_graph(df, dataset):
     #########
     df = df.Define("cut0", "0")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "cut0"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 1: Number Chad
@@ -65,6 +67,8 @@ def build_graph(df, dataset):
     df = df.Filter("jet_nchad[1] > 7")
     df = df.Define("CHad", "1")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "CHad"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 2: Number NNhad
@@ -81,6 +85,8 @@ def build_graph(df, dataset):
     df = df.Filter("jet_nconst[1] > 14")
     df = df.Define("nconst", "2")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "nconst"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 1: Momentum
@@ -89,6 +95,8 @@ def build_graph(df, dataset):
     df = df.Filter("jj_p[1] > 46")
     df = df.Define("jetp", "3")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jetp"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 2: Transverse Momentum
@@ -97,6 +105,8 @@ def build_graph(df, dataset):
     df = df.Filter("jj_pt[1] > 45")
     df = df.Define("jetpt", "4")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jetpt"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 3: Energy
@@ -105,6 +115,8 @@ def build_graph(df, dataset):
     df = df.Filter("jj_e[1] > 50")
     df = df.Define("jete", "5")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jete"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 4: Strange Score
@@ -117,41 +129,57 @@ def build_graph(df, dataset):
     #########
     ### CUT 5: Light Score
     #########
-    df = df.Filter("recojet_isQ[0] > 0.02")
-    df = df.Filter("recojet_isQ[1] > 0.02")
-    df = df.Define("qtag", "6")
-    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "qtag"))
+#    df = df.Filter("recojet_isQ[0] > 0.02")
+#    df = df.Filter("recojet_isQ[1] > 0.02")
+#    df = df.Define("qtag", "6")
+#    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "qtag"))
 
     #########
     ### CUT 6: Gluon Score
     #########
-    df = df.Filter("recojet_isG[0] > 0.84")
-    df = df.Filter("recojet_isG[1] > 0.85")
-    df = df.Define("gtag", "7")
-    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "gtag"))
+#    df = df.Filter("recojet_isG[0] > 0.84")
+#    df = df.Filter("recojet_isG[1] > 0.85")
+#    df = df.Define("gtag", "7")
+#    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "gtag"))
+
+    #########
+    ### CUT 7: Combined Gluon Score
+    #########
+    df = df.Define("scoresum_G", "recojet_isG[0] + recojet_isG[1]")
+    df = df.Filter("scoresum_G > 1.6")
+    df = df.Define("comb_gluon_score", "6")
+    results.append(df.Histo1D(("cutFlow", "", *bins_flow), "comb_gluon_score"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 7: Individual Mass
     #########
     df = df.Filter("jet_m[0] > 21")
     df = df.Filter("jet_m[1] > 14")
-    df = df.Define("ind_jet_mass", "8")
+    df = df.Define("ind_jet_mass", "7")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "ind_jet_mass"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 7: Mass
     #########
     df = df.Filter("jj_m > 120")
-    df = df.Define("jets_mass", "9")
+    df = df.Define("jets_mass", "8")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jets_mass"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #########
     ### CUT 8: Eta
     #########
     df = df.Filter("jj_eta[0] > -1.4")
     df = df.Filter("jj_eta[1] > -5.2")
-    df = df.Define("jet_eta", "10")
+    df = df.Define("jet_eta", "9")
     results.append(df.Histo1D(("cutFlow", "", *bins_flow), "jet_eta"))
+    hist = df.Histo1D(("jj_p", "", *bins_p), "jj_p")
+    print(hist.Integral())
 
     #################
 
@@ -160,7 +188,7 @@ def build_graph(df, dataset):
     results.append(df.Histo1D(("jj_theta", "", *bins_theta), "jj_theta"))
     results.append(df.Histo1D(("jj_phi", "", *bins_phi), "jj_phi"))
     results.append(df.Histo1D(("jj_m", "", *bins_m_jj), "jj_m"))
-    results.append(df.Histo1D(("jj_eta", "", *bins_m_jj), "jj_eta"))
+    results.append(df.Histo1D(("jj_eta", "", *bins_eta), "jj_eta"))
 
     results.append(df.Histo1D(("jj_e", "", *bins_e), "jj_e"))
     results.append(df.Histo1D(("jj_pt", "", *bins_p), "jj_pt"))
