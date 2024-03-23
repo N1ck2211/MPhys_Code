@@ -4,7 +4,7 @@ A Backup Repo for code used during my masters' thesis.
 ## Treemaker files:
 - Contains treemaker files, which are used to apply jet tagging and clustering algorithms, get features already present in Winter2023 dataset, and compute combined jet mass. These features are then returned in flat NTuple File format.
 
-## Histmaker files:
+## Histmaker files:
 - Apply cuts to features in flat NTuple files, produces and returns TH1D histmaker object for each feature. Weights of each histogram are scled by luminosity/cross section to give true number of expected events.
 
 ## Plotting Files
